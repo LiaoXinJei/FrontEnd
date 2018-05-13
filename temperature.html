@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        body {
+            font-family: '微軟正黑體'
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <!-- left(radiobutton) -->
+            <div class="col-3">
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <h6 class="card-title">Please select unit:</h6>
+                        <input type="radio" checked="true" name="unit" id="unitCF" value="checkedvalue">攝氏轉華氏
+                        <input type="radio" name="unit" id="unitFC" value="checkedvalue">華氏轉攝氏
+                    </div>
+                </div>
+            </div>
+
+            <!-- calculator -->
+            <div class="col-3">
+                <div class="offset-4">
+                    <div class="row text-center mb-1">
+                        <button type="button" class="btn btn-muted mr-1">1</button>
+                        <button type="button" class="btn btn-muted mr-1">2</button>
+                        <button type="button" class="btn btn-muted mr-1">3</button>
+                    </div>
+                    <div class="row text-center mb-1">
+                        <button type="button" class="btn btn-muted mr-1">4</button>
+                        <button type="button" class="btn btn-muted mr-1">5</button>
+                        <button type="button" class="btn btn-muted mr-1">6</button>
+                    </div>
+                    <div class="row text-center mb-1">
+                        <button type="button" class="btn btn-muted mr-1">7</button>
+                        <button type="button" class="btn btn-muted mr-1">8</button>
+                        <button type="button" class="btn btn-muted mr-1">9</button>
+                    </div>
+                    <div class="row text-center mb-1">
+                        <button type="button" class="btn btn-muted mr-1">0</button>
+                        <button type="button" class="btn btn-muted mr-1">.</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- output -->
+            <div class="col-6 mt-5">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="getoutput" name="" aria-describedby="helpId" placeholder="請輸入溫度">
+                    <button type="button" id="btnConvert" class="btn btn-primary mt-1 mr-2">轉換</button>
+                    <button type="button" id="btnClear" class="btn btn-danger mt-1 mr-1">清除</button>
+                    <small id="helpId" class="text-muted">結果：45度C = 113度F</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        for (i = 0; i < 11; i++)
+            document.getElementsByTagName("button")[i].style.backgroundColor = "#ff0000";
+
+        // input12345
+        var buttons = document.getElementsByTagName("button");
+        for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            button.onclick = function () {
+                var btn = event.srcElement;
+                document.getElementById("getoutput").value += btn.innerText;
+            };
+        }
+
+        //radiobutton
+        var tempfc = document.getElementById("unitFC");
+        var tempcf = document.getElementById("unitCF");
+        //btnconvert
+        var btnconvert = document.getElementById("btnConvert");
+        btnconvert.onclick = function () {
+            var output = document.getElementById("helpId");
+            var getoutput = document.getElementById("getoutput");
+
+            if (tempfc.checked == true) {
+                output.textContent = "結果：攝氏溫度" + getoutput.value +
+                    " 轉華氏為：" + (getoutput.value * 1.8 + 32).toFixed(2);
+            } else {
+                output.textContent = "結果：華氏溫度" + document.getElementById("getoutput").value +
+                    " 轉攝氏為：" + (getoutput.value - 32 / 1.8).toFixed(2);
+            }
+        }
+
+        //btnclear
+        var btnclear = document.getElementById("btnClear");
+        btnclear.onclick = function () {
+            document.getElementById("getoutput").value = "";
+        }
+    </script>
+</body>
+
+</html>

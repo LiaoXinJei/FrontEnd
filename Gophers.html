@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        body {
+            background: url(./images/bg-dirt.png);
+        }
+
+        /*background*/
+
+        .mole {
+            width: 120px;
+            height: 120px;
+            line-height: 120px;
+            text-align: center;
+            background-image: url(./images/grass-upper.png);
+            background-repeat: no-repeat;
+            background-size: 120px 60px;
+            background-position: top 0;
+            position: relative;
+        }
+
+        .mole::after {
+            content: " ";
+            width: 120px;
+            height: 60px;
+            background-image: url(./images/grass-lower.png);
+            background-repeat: no-repeat;
+            background-size: 120px 60px;
+            background-position: top 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        /*ready*/
+
+        .mole::before {
+            content: "";
+            width: 80px;
+            height: 80px;
+            background-image: url(./images/mole-laugh1.png);
+            background-repeat: no-repeat;
+            background-size: 80px 80px;
+            background-position: top 0;
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            transition: all 1s;
+        }
+
+        /*headout*/
+
+        .mole.active::before {
+            background-image: url(./images/mole.png);
+            top: 0;
+            transition: all .3s;
+        }
+
+        .mole.hit::before {
+            background-image: url(./images/mole-thump4.png);
+            transition: all .1s;
+        }
+
+
+        #score {
+            position: fixed;
+            min-width: 250px;
+            right: 0;
+            top: 20px;
+            background: rgba(50, 50, 50, .5);
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <table class="mx-auto mt-5">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                    <td>
+                        <div class="mole"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="score">
+            <h2 class="text-danger">Score Board</h2>
+            <h3 class="text-info">
+                <span>Your Score:</span>
+                <span id="current-score">0</span>
+            </h3>
+            <h3 class="text-info">
+                <span>Life</span>
+                
+            </h3>
+            <p>
+                <button id="start" class="btn btn-default">Start</button>
+                <button id="stop" class="btn btn-default">End</button>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var $gophers = [];
+
+            for (var i = 0; i < 9; i++) {
+                $gophers[i] = $(".mole")[i];
+            }
+
+            $("#start").on("click", function () {
+                active();
+            });
+
+            $("#stop").on("click", function () {
+                console.log("clicked stop");
+                stop();
+            })
+
+
+            //hit click
+            $("div").on("click", ".active", function () {
+                console.log("clicked hit");
+                updateScore();
+                stop();
+                active();
+            });
+
+            //start
+            var next = 0;
+            var pre = 0;
+            var timer = null;
+
+            function active() {
+                $gophers[next].className = "mole";
+                next = Math.floor(Math.random() * $gophers.length);
+                while (next == pre) {
+                    next = Math.floor(Math.random() * $gophers.length);
+                }
+                pre = next;
+                $gophers[next].className = "active mole";
+                timer = setTimeout(active, 1500);
+            }
+
+            //stop
+            function stop() {
+                for (var i = 0; i < 9; i++) {
+                    $gophers[i].className = "mole";
+                }
+                clearTimeout(timer);
+            }
+
+            //update score
+            var score = 0;
+
+            function updateScore() {
+                score += 10;
+                $("#current-score").html(score);
+            }
+        })
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

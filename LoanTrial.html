@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-9 text-center">
+                <h3>貸款試算</h3>
+            </div>
+        </div>
+        <!-- 貸款金額 -->
+        <div class="form-group row">
+            <label for="txtNetIncome" class="col-2 col-form-label text-right">貸款金額</label>
+            <div class="input-group col-6">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <!-- input -->
+                <input type="text" class="form-control" id="borrow" />
+            </div>
+        </div>
+        <!-- 貸款期數 -->
+        <div class="form-group row">
+            <label for="txtNetIncome" class="col-2 col-form-label text-right">貸款期數</label>
+            <div class="input-group col-6">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <!-- input -->
+                <input type="text" class="form-control" id="amount" />
+            </div>
+        </div>
+
+        <!-- 利率 -->
+        <div class="form-group row">
+            <label for="txtNetIncome" class="col-2 col-form-label text-right">利率</label>
+            <div class="input-group col-6">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <!-- input -->
+                <input type="text" class="form-control" id="interest" />
+            </div>
+
+            <div class="col-1">
+                <button class="btn btn-primary" id="cal">
+                    <i class="fas fa-calculator"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 每月應繳 -->
+    <div class="form-group row">
+        <label for="txtTaxAdjustment" class="col-3 col-form-label text-right">每月應繳</label>
+        <div class="input-group col-5">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+            </div>
+            <!-- input -->
+            <input id="month" type="text" class="form-control" readonly/>
+        </div>
+    </div>
+
+    <!-- 應還金額 -->
+    <div class="form-group row">
+        <label for="txtTaxAmount" class="col-3 col-form-label text-right">應還金額</label>
+        <div class="input-group col-5">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+            </div>
+            <!-- input -->
+            <input id="moneyback" type="text" class="form-control" readonly />
+        </div>
+    </div>
+
+    <script>
+        var LoanCalculator = function (yRate, yLoan, yAmount) {
+            var _mRate = yRate / 12;
+            var _amount = yAmount;
+            var _mLoan = yLoan * 12;
+            var _aRate = ((Math.pow(1 + _mRate, _mLoan)) * _mRate) / ((Math.pow(1 + _mRate, _mLoan)) - 1);
+
+            this.getMonthlyPayAmount = function () {
+                return Math.floor(_amount * _aRate);
+            }
+
+            this.getTotalFinalPayAmount = function () {
+                return Math.floor(this.getMonthlyPayAmount() * _mLoan);
+            }
+
+            this.getMonthlyPayRateAmount = function () {
+                return Math.floor(this.getMonthlyPayAmount() - (_amount / _mLoan));
+            }
+        }
+
+        // var mloan = document.getElementById("interest");
+
+        document.getElementById("cal").onclick = function () {
+            var amount = document.getElementById("amount");
+            var borrow = document.getElementById("borrow");
+            var interest = document.getElementById("interest");
+            var calculator = new LoanCalculator(interest.value, amount.value, borrow.value);
+            document.getElementById("month").value = calculator.getMonthlyPayAmount();
+            document.getElementById("moneyback").value = calculator.getTotalFinalPayAmount();
+        }
+        // document.write(calculator.getMonthlyPayAmount());
+        // document.write("<br />");
+        // document.write(calculator.getTotalFinalPayAmount());
+        // document.write("<br />");
+        // document.write(calculator.getMonthlyPayRateAmount());
+    </script>
+</body>
+
+</html>

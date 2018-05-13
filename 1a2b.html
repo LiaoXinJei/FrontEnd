@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        body {
+            font-family: '微軟正黑體'
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+                <div class="col-12">
+                    <button type="button" id="start" class="btn btn-primary">開始遊戲</button>
+                </div>
+                <div class="col-12 mb-5">
+                    <button type="button" id="answer" class="btn btn-muted mt-5">偷看答案</button>
+                </div>
+                <div class="input-group mt-5">
+                    <input id="text" type="text" class="form-control" placeholder="輸入" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" id="check" type="button">檢查答案</button>
+                    </div>
+                </div>
+                <button type="button" id="restart" class="btn btn-muted mt-5">放棄重來</button>
+            </div>
+            <div class="col">
+                <h5>遊戲歷程</h5>
+                <div class="card border-secondary">
+                    <img class="card-img-top" src="holder.js/100px180/" alt="">
+                    <div id="output" class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        var start = document.getElementById("start");
+        var answer = document.getElementById("answer");
+        var input = document.getElementById("text");
+        var check = document.getElementById("check");
+        var restart = document.getElementById("restart");
+        var output = document.getElementById("output");
+        var rnd = [];
+        var compare = [];
+        var A = 0,
+            B = 0;
+
+        // start
+        start.onclick = function () {
+            for (i = 0; i < 4; i++) {
+                rnd[i] = Math.floor(Math.random() * 10);
+                for (j = 0; j < i; j++) {
+                    if (rnd[i] == rnd[j]) {
+                        i--;
+                        break;
+                    }
+                }
+            }
+        }
+        // restart
+        restart.onclick = function () {
+            count = 0;
+            output.textContent = "";
+            rnd = [];
+            input.value = "";
+        }
+        // answer
+        answer.onclick = function () {
+            alert(rnd);
+        }
+        // check
+        check.onclick = function () {
+            var ans = document.createElement("p");
+            ans.className = "card-text";
+
+            var thounsand = Math.floor(input.value / 1000);
+            var hundred = Math.floor(input.value % 1000 / 100);
+            var ten = Math.floor(input.value % 100 / 10);
+            var bit = Math.floor(input.value % 10);
+            compare[0] = thounsand;
+            compare[1] = hundred;
+            compare[2] = ten;
+            compare[3] = bit;
+
+            for (var i = 0; i < 4; i++) {
+                if (rnd[i] == compare[i]) {
+                    A++;
+                    if (A == 4) {
+                        alert("過關");
+                        rnd = [];
+                    }
+                } else {
+                    for (var j = 0; j < 4; j++) {
+                        if (rnd[i] == compare[j]) {
+                            B++;
+                        }
+                    }
+                }
+            }
+            ans.innerText = input.value + ":" + A + "A" + B + "B";
+            output.appendChild(ans);
+            A=0,B=0;
+        }
+    </script>
+
+</body>
+
+</html>
