@@ -55,8 +55,6 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <div class="col-2">
-            </div>
             <button id="gotoprev" type="button" class="btn" style="background-color:white;">
                 <i class="fas fa-caret-left"></i>
             </button>
@@ -67,7 +65,6 @@
             <button id="gotonext" type="button" class="btn" style="background-color:white;">
                 <i class="fas fa-caret-right"></i>
             </button>
-
         </div>
     </div>
 
@@ -326,10 +323,10 @@
                 tr.innerHTML += '<td class = "text-gray">' + (getnextMonth++) + '</td>';
                 tbody.appendChild(tr);
             }
+            clicktd();
+            get_localStorage();
         }
         refresh();
-        clicktd();
-        get_localStorage()
 
         function End(nowYear, nowMonth) {
             return new Date(nowYear, nowMonth + 1, 0)
@@ -355,9 +352,9 @@
                 nowMonth = 11;
             }
             refresh();
-            clicktd();
-            get_localStorage();
-            tbutton();            
+            // clicktd();
+            // get_localStorage();
+            tbutton();
         }
 
         gotonext.onclick = function (e) {
@@ -372,8 +369,8 @@
                 nowMonth = 0;
             }
             refresh();
-            clicktd();
-            get_localStorage();
+            // clicktd();
+            // get_localStorage();
             tbutton();
         }
 
@@ -433,7 +430,6 @@
 
                         var btnDelete = document.createElement("button");
                         btnDelete.textContent = "刪除";
-                        // btnDelete.id = localStorage.key(j);
                         td.appendChild(btnDelete);
                     }
                 }

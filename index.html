@@ -6,87 +6,105 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
-        <link rel="stylesheet" href="styles\style.css">
+    <style>
+        body {
+            font-family: '微軟正黑體'
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="../index.html">主頁面</a>
-        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation"></button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">作品集</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="../Resume.html">履歷
+                    <a class="nav-link" href="#">主頁面
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <!--
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownId">
-                                <a class="dropdown-item" href="#">Action 1</a>
-                                <a class="dropdown-item" href="#">Action 2</a>
-                            </div>
-                        </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">履歷</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">前端作品</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">行事曆</a>
+                        <a class="dropdown-item" href="#">小瑪莉</a>
+                        <a class="dropdown-item" href="#">打地鼠</a>
+                        <a class="dropdown-item" href="#">終極密碼</a>
+                        <a class="dropdown-item" href="#">猜數字</a>
+                        <a class="dropdown-item" href="#">匯率轉換</a>
+                        <a class="dropdown-item" href="#">溫度轉換</a>
+                        <a class="dropdown-item" href="#">GoogleMap交通費率評估</a>
+                        <a class="dropdown-item" href="#">肉球新聞(Css)</a>
+                        <a class="dropdown-item" href="#">BuildSchool(Css)</a>
+                    </div>
+                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
         </div>
     </nav>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">主頁面</a>
+    </nav>
+
     <!--header-->
     <main>
-    <div class="jumbotron">
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3">廖信傑</h1>
+                <p>　　-來自全台灣最優秀的教育學校-BuildSchool
+                    <br>
+                    <p>我的Github：
+                        <a href="https://github.com/LiaoXinJei">https://github.com/LiaoXinJei</a>
+                    </p>
+                </p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="../Resume.html" role="button">履歷 »</a>
+                </p>
+            </div>
+        </div>
+
+
+        <!--content-->
         <div class="container">
-            <h1 class="display-3">歡迎！</h1>
-            <p>來自全台灣最優秀的教育學校-Build School
-                <br>
-            </p>
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="../Resume.html" role="button">線上履歷(Exercise2) »</a>
-            </p>
+            <div class="row">
+                <div class="col-md-4">
+                    <h1>行事曆</h1>
+                    <p>顯示每月的日期，能在行事曆上輸入資料，並利用localStorage進行存取</p>
+                    <p>
+                        <a name="" id="" class="btn btn-secondary" href="../CalendarWithGoogleMap.html" role="button">前往觀看 »</a>
+                    </p>
+
+                </div>
+                <div class="col-md-4">
+                    <h1>BuildSchool卡片</h1>
+                    <p>利用Css刻出一個相仿的Trello卡片，相似度越高越好</p>
+                    <p>
+                        <a name="" id="" class="btn btn-secondary" href="../TrelloPractice.html" role="button">View Details</a>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h1>Github</h1>
+                    <p>我的Github(Hackathon)</p>
+                    <p>
+                        <a name="" id="" class="btn btn-secondary" href="https://github.com/LiaoXinJei" role="button">View Details</a>
+                    </p>
+                </div>
+            </div>
+
+            <hr />
         </div>
-    </div>
-    
-
-    <!--content-->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h1>BuildSchool</h1>
-                <p>利用Css刻出一個相仿的BuildSchool網頁</p>
-                <p>
-                    <a name="" id="" class="btn btn-secondary" href="#" role="button">View Details</a>
-                </p>
-
-            </div>
-            <div class="col-md-4">
-                <h1>BuildSchool卡片</h1>
-                <p>利用Css刻出一個相仿的Trello卡片，相似度越高越好</p>
-                <p>
-                    <a name="" id="" class="btn btn-secondary" href="../TrelloPractice.html" role="button">View Details</a>
-                </p>
-            </div>
-            <div class="col-md-4">
-                <h1>Github</h1>
-                <p>我的Github(Hackathon)</p>
-                <p>
-                    <a name="" id="" class="btn btn-secondary" href="https://github.com/LiaoXinJei" role="button">View Details</a>
-                </p>
-            </div>
-        </div>
-
-        <hr />
-    </div>
     </main>
     <!--footer-->
     <div class="container">
