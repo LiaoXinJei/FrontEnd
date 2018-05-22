@@ -58,7 +58,7 @@
             <button id="gotoprev" type="button" class="btn" style="background-color:white;">
                 <i class="fas fa-caret-left"></i>
             </button>
-            <button type="button" class="btn btn-block" style=" background-color:white; ">
+            <button id="btnNewSchedule" type="button" class="btn btn-block" style=" background-color:white;" data-toggle="modal" data-target="#modelId">
                 <h1 id="calendar-month">March</h1>
                 <h2 id="calendar-year">2018</h2>
             </button>
@@ -112,6 +112,12 @@
                     <form>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">時間：</label>
+                            <div class="col-sm-10">
+                                <input id="date" type="email" class="form-control" placeholder="日期">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-10">
                                 <input id="hour" type="email" class="form-control" placeholder="時">
                             </div>
@@ -273,7 +279,6 @@
         var nowMonth = now.getMonth();
         var nowDate = now.getDate();
 
-
         var MonthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
             "October", "Novenber", "December"
         ];
@@ -286,10 +291,11 @@
             var nowEnd = End(nowYear, nowMonth);
             var nextMonth = next(nowYear, nowMonth);
             calendar_month.innerText = MonthArray[nowMonth];
-            calendar_year.innerText = nowYear;
+            calendar_year.innerText = nowYear + "(點擊新增行程)";
 
             var tbody = document.getElementById("tbody");
             var tr = document.createElement("tr");
+            //上個月
             if (lastMonth.getDay() != 6) {
                 for (var i = lastMonth.getDay(); i >= 0; i--) {
                     count++;
@@ -298,6 +304,7 @@
                 }
             }
 
+            //這個月
             for (var i = 1; i <= nowEnd.getDate(); i++) {
                 count++;
                 if (count % 7 == 1) {
@@ -306,10 +313,10 @@
                 if (i == now.getDate() &&
                     nowEnd.getMonth() == now.getMonth() &&
                     nowEnd.getFullYear() == now.getFullYear()) {
-                    tr.innerHTML += '<td class = "nowdate" data-toggle="modal" data-target="#modalResult">' + i +
+                    tr.innerHTML += '<td class = "nowdate">' + i +
                         '</td>';
                 } else {
-                    tr.innerHTML += '<td data-toggle="modal" data-target="#modelId">' + i + '</td>';
+                    tr.innerHTML += '<td>' + i + '</td>';
                 }
                 tbody.appendChild(tr);
             }
@@ -374,32 +381,30 @@
             tbutton();
         }
 
-        //------------------localstorage------------------
-        //td onclick
-
-        var tdSchedule = ["date", "year", "month"];
+        var tdSchedule = ["year", "month"];
+        //btnNewSchedule onclick
+        document.getElementById("btnNewSchedule").onclick = function (e) {
+            tdSchedule["month"] = calendar_month.innerText;
+            tdSchedule["year"] = calendar_year.innerText.split("(", 1).toString();
+        }
 
         function clicktd() {
             var tds = document.getElementsByTagName("td");
             for (var i = 0; i < tds.length; i++) {
                 var td = tds[i];
                 td.onclick = function () {
-                    var t = event.srcElement;
-                    tdSchedule["date"] = t.innerText;
                     tdSchedule["month"] = calendar_month.innerText;
-                    tdSchedule["year"] = calendar_year.innerText;
+                    tdSchedule["year"] = calendar_year.innerText.split("(", 1).toString();
                 }
             }
         }
 
         //save modal   
-        var button = document.getElementById("save");
-
         var morning = document.getElementById("morning");
         var afternoon = document.getElementById("afternoon");
         var radio;
         var Schedule, getSchedule;
-        button.onclick = function () {
+        document.getElementById("save").onclick = function () {
             if (morning.checked == true) {
                 radio = "上午";
             } else if (afternoon.checked == true) {
@@ -421,15 +426,18 @@
                 for (var j = 0; j < localStorage.length; j++) {
                     var objectSchedule = JSON.parse(localStorage[localStorage.key(j)]);
 
-                    if (objectSchedule.year == calendar_year.innerText &&
+                    if (objectSchedule.year == calendar_year.innerText.split("(", 1).toString() &&
                         objectSchedule.month == calendar_month.innerText &&
-                        objectSchedule.date == td.innerText) {
+                        objectSchedule.date == td.innerText &&
+                        td.className != "text-gray") {
                         td.innerHTML +=
                             '<button role="Result" data-toggle="modal" data-target="#modalResult" name="tdbutton" id="' +
                             localStorage.key(j) + '">' + '查看詳情';
 
                         var btnDelete = document.createElement("button");
                         btnDelete.textContent = "刪除";
+                        btnDelete.name = "btnDelete"
+                        btnDelete.id = localStorage.key(j);
                         td.appendChild(btnDelete);
                     }
                 }
@@ -512,16 +520,18 @@
         }
 
 
-        // var DeletelocalStorage = document.getElementsByTagName("button");
-        // for (var i = 0; i < DeletelocalStorage.length; i++) {
-        //     deletelocal = DeletelocalStorage[i];
-        //     deletelocal.onclick = function () {
-        //         var d = event.srcElement;
-        //         localStorage.removeItem(d.id);
-        //         get_localStorage();
-        //     }
-        // }
+        var DeletelocalStorage = document.getElementsByName("btnDelete");
+        console.log(DeletelocalStorage);
+        for (var i = 0; i < DeletelocalStorage.length; i++) {
+            DeletelocalStorage[i].onclick = function () {
+                var d = event.srcElement;
+                localStorage.removeItem(d.id);
+                alert("資料已刪除！");
+                get_localStorage();
+            }
+        }
 
+        var date = document.getElementById("date");
         var hour = document.getElementById("hour");
         var minute = document.getElementById("minute");
         var affairs = document.getElementById("affairs");
@@ -532,7 +542,7 @@
                 key: '',
                 year: tdSchedule["year"],
                 month: tdSchedule["month"],
-                date: tdSchedule["date"],
+                date: date.value,
                 hour: hour.value,
                 minute: minute.value,
                 r: radio,
